@@ -63,7 +63,7 @@ function createBubble() {
         .attr("class", "xqdd_bubble_delete")
         .text("✖")
         .click(() => {
-            if (window.confirm("确认删除单词？（若已登录云端，云端单词会同时删除）")) {
+            // if (window.confirm("确认删除单词？（若已登录云端，云端单词会同时删除）")) {
                 chrome.runtime.sendMessage({type: "delete", wordData: currWordData}, function (msg) {
                     //取消高亮删除的单词
                     $(`xqdd_highlight_new_word[word='${currWordData.word}']`).attr("class", "xqdd_highlight_disable")
@@ -71,7 +71,7 @@ function createBubble() {
                         // alert(msg)
                     }
                 })
-            }
+            // }
         })
     var word = $("<span>").attr("class", "xqdd_bubble_word")
     var trans = $("<span>").attr("class", "xqdd_bubble_trans")
