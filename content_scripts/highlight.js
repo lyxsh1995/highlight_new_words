@@ -313,11 +313,12 @@ function highlightNode(texts) {
  * @returns {*}
  */
 function hightlightText(text) {
+    var newText = text + "(已匹配)";
     //注意jqury对象转为dom对象使用[0]或者.get(0)
     return $("<xqdd_highlight_new_word>")
         .attr("word", text.toLowerCase())
         .attr("class", "xqdd_highlight_new_word")
-        .text(text)[0];
+        .text(newText)[0];
 }
 
 
