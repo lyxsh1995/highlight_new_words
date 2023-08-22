@@ -243,7 +243,7 @@ function highlightNode(texts) {
     // }
 
     //使用split
-    var tempTexts = texts.split(/\s/)
+    var tempTexts = texts.split(/[\s.,;?!:]+/)
     for (i in tempTexts) {
         var tempText = tempTexts[i].trim()
         if (tempText != "") {
