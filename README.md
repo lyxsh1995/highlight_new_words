@@ -1,4 +1,4 @@
-#  效果图
+#  仿relingo效果图
 ![效果图](https://github.com/lyxsh1995/highlight_new_words/blob/master/screen.png)
 
 #  Forked from [XQDD/highlight_new_words](https://github.com/XQDD/highlight_new_words)
