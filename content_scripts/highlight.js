@@ -49,8 +49,6 @@ function init() {
             alert("导入生词本成功")
         }
     })
-
-
 }
 
 /**
@@ -313,7 +311,12 @@ function highlightNode(texts) {
  * @returns {*}
  */
 function hightlightText(text) {
-    var newText = text + "(已匹配)";
+	var wordInfo = newWords.wordInfos[text.toLowerCase()]
+	var fullTrans = wordInfo.trans;
+	var semicolonIndex = Math.min(fullTrans.indexOf('，')  === -1 ? fullTrans.length : fullTrans.indexOf('，'), fullTrans.indexOf('；') === -1 ? fullTrans.length : fullTrans.indexOf('；'));
+	var startindex = fullTrans.indexOf('.') === -1 ? 0 : fullTrans.indexOf('.');
+	var trans = fullTrans.substring(startindex+1, semicolonIndex).trim();
+	var newText = text + "("+trans+")";
     //注意jqury对象转为dom对象使用[0]或者.get(0)
     return $("<xqdd_highlight_new_word>")
         .attr("word", text.toLowerCase())
