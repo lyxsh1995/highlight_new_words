@@ -49,6 +49,9 @@ function init() {
             alert("导入生词本成功")
         }
     })
+	
+	//监听节点变动
+	onNodeadd();
 }
 
 /**
@@ -405,4 +408,29 @@ function onNodeInserted(event) {
     if (!classattr || !classattr.startsWith("xqdd")) {
         highlight(textNodesUnder(inobj))
     }
+}
+
+/**
+ *	监听节点变动
+ */
+function onNodeadd(){
+	// 创建一个观察器实例
+	var observer = new MutationObserver(function(mutations) {
+	mutations.forEach(function(mutation) {
+    // 检查是否有新节点添加
+    if (mutation.addedNodes) {
+      mutation.addedNodes.forEach(function(node) {
+        // 在这里处理新节点
+        console.log('New node added:', node);
+		highlight(textNodesUnder(node))
+		});
+		}
+	});
+	});
+
+// 配置观察器：观察子节点和后代节点的添加或删除
+	var config = { childList: true, subtree: true };
+
+// 传入目标节点和观察器配置
+	observer.observe(document.body, config);
 }
