@@ -313,7 +313,10 @@ function highlightNode(texts) {
 function hightlightText(text) {
 	var wordInfo = newWords.wordInfos[text.toLowerCase()]
 	var fullTrans = wordInfo.trans;
-	var semicolonIndex = Math.min(fullTrans.indexOf('，')  === -1 ? fullTrans.length : fullTrans.indexOf('，'), fullTrans.indexOf('；') === -1 ? fullTrans.length : fullTrans.indexOf('；'), fullTrans.indexOf(',') === -1 ? fullTrans.length : fullTrans.indexOf(','));
+	var semicolonIndex = Math.min(fullTrans.indexOf('，')  === -1 ? fullTrans.length : fullTrans.indexOf('，'),
+			fullTrans.indexOf('；') === -1 ? fullTrans.length : fullTrans.indexOf('；'), 
+			fullTrans.indexOf(',') === -1 ? fullTrans.length : fullTrans.indexOf(','), 
+			fullTrans.indexOf(' ',fullTrans.indexOf(' ')+1) === -1 ? fullTrans.length : fullTrans.indexOf(' ',fullTrans.indexOf(' ')+1));
 	var startindex = fullTrans.indexOf('.') === -1 ? 0 : fullTrans.indexOf('.');
 	var trans = fullTrans.substring(startindex+1, semicolonIndex).trim();
 	var newText = text + "("+trans+")";
