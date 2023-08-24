@@ -33,7 +33,7 @@ function init() {
                 //console.log("解析总耗时：" + (new Date().getTime() - before) + " ms")
 
                 //在插入节点时修改
-                document.addEventListener("DOMNodeInserted", onNodeInserted, false);
+                //document.addEventListener("DOMNodeInserted", onNodeInserted, false);
                 chrome.runtime.sendMessage({type: "setStyle"})
             })
 
@@ -106,7 +106,7 @@ function showBubble() {
         var bubble = $(".xqdd_bubble")
         if (showedNode != currNode || bubble.css("display") != "flex") {
             var nodeRect = currNode.getBoundingClientRect();
-            var word = $(currNode).text()
+            var word = $(currNode).text().split('(')[0]
             var wordInfo = newWords.wordInfos[word.toLowerCase()]
             $(".xqdd_bubble_word").html((wordInfo.link ? wordInfo.link : wordInfo.word) + "  " + `<span>${wordInfo["phonetic"]}</span>`)
             $(".xqdd_bubble_trans").html(wordInfo["trans"])
@@ -416,16 +416,31 @@ function onNodeInserted(event) {
 function onNodeadd(){
 	// 创建一个观察器实例
 	var observer = new MutationObserver(function(mutations) {
-	mutations.forEach(function(mutation) {
-    // 检查是否有新节点添加
-    if (mutation.addedNodes) {
-      mutation.addedNodes.forEach(function(node) {
-        // 在这里处理新节点
-        console.log('New node added:', node);
-		highlight(textNodesUnder(node))
+		mutations.forEach(function(mutation) {
+		// 检查是否有新节点添加
+			if (mutation.addedNodes) {
+				mutation.addedNodes.forEach(function(node) {
+					var inobj = node
+					if (!inobj)
+						return;
+					if ($(inobj).parents(".xqdd_bubble").length > 0) {
+						return
+					}
+					var classattr = null;
+					if (typeof inobj.getAttribute !== 'function') {
+						return;
+					}
+					try {
+						classattr = inobj.getAttribute('class');
+					} catch (e) {
+						return;
+					}
+					if (!classattr || !classattr.startsWith("xqdd")) {
+						highlight(textNodesUnder(inobj))
+					}
+				});
+			}
 		});
-		}
-	});
 	});
 
 // 配置观察器：观察子节点和后代节点的添加或删除
